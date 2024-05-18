@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}  
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-6 mb-4">
+      <div class="mb-3">
+        <img class="img-fluid rounded" src="{{ ice_cream.main_image.image.url }}" alt="">
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-4">{{ ice_cream.name }}</h1>
+      <p class="lead">{{ ice_cream.description }}</p>
+      <hr class="my-4">
+      <p>Ціна: {{ ice_cream.price }} грн.</p>
+      <p>Кількість: {{ ice_cream.quantity }} шт.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h2 class="card-title">Оставить отзыв</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    {% for review in ice_cream.reviews.all %}
+    <div class="col-lg-8 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ review.name }}</h5>
+          <p class="card-text">{{ review.text }}</p>
+          <p class="card-text"><small class="text-muted">{{ review.created }}</small></p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div> 
+{% endblock %}
