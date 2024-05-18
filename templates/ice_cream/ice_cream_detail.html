@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}  
+<div class="container py-2">
+  <div class="row py-3">   
+    {% for image in ice_cream.images.all %}
+    <div class="col-12 col-md-5 col-xl-3" >
+      <img class="img-fluid img-thumbnail" src="{{ image.image.url }}" alt="">
+    </div>   
+    {% endfor %}
+    <div class="col-12 col-md-7 col-xl-9">
+      <h1>{{ ice_cream.name }}</h1>
+      <p>{{ ice_cream.description }}</p>
+      <p>Ціна: {{ ice_cream.price }} грн.</p>
+      <p>Кількість: {{ ice_cream.quantity }} шт.</p>
+    </div>
+  </div>
+</div> 
+{% endblock %}
