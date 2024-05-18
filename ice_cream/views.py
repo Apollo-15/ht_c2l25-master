@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import IceCream, Review
+from .forms import ReviewForm
 
 from .models import IceCream
 
@@ -30,3 +32,15 @@ def ice_cream_detail(request, pk):
         'ice_cream': ice_cream,
     }
     return render(request, template, context)
+
+def ice_cream_reviews(request, pk):
+    ice_cream = get_object_or_404(IceCream, pk=pk)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.ice_cream = ice_cream
+            review.save()
+    else:
+        form = ReviewForm()
+    return render(request, 'ice_cream/ice_cream_reviews.html', {'form': form, 'ice_cream': ice_cream})

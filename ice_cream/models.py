@@ -63,3 +63,12 @@ class Image(models.Model):
         if self.is_main:
             Image.objects.filter(ice_cream=self.ice_cream).update(is_main=False)
         super().save(*args, **kwargs)
+
+class Review(models.Model):
+    ice_cream = models.ForeignKey(IceCream, on_delete=models.CASCADE, related_name='reviews')
+    name = models.CharField(max_length=100)
+    text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.text
